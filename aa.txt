@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Runtime.Serialization;
+
+namespace DataStructure
+{
+    [System.Serializable]
+    [System.Runtime.Serialization.DataContract]
+    public class ProgramDetail
+    {
+        [DataMember]
+        public int TransportStreamId { get; set; }
+        [DataMember]
+        public int ServiceId { get; set; }
+        [DataMember]
+        public int EventId { get; set; }
+        [DataMember]
+        public string Title { get; set; } = string.Empty;
+        [DataMember]
+        public string Detail { get; set; } = string.Empty;
+        [DataMember]
+        public string Extended { get; set; } = string.Empty;
+        [DataMember]
+        public bool Booking { get; set; }
+
+        [DataMember(Name = "StartTime")]
+        [XmlElement("StartTime")]
+        public string _startTime { get; set; } = DateTime.MinValue.ToString();
+
+        [DataMember(Name = "Duration")]
+        [XmlElement("Duration")]
+        public string _duration { get; set; } = TimeSpan.Zero.ToString();
+
+        [IgnoreDataMember]
+        [XmlIgnore]
+        public DateTime StartTime { get { return DateTime.Parse(_startTime); } set { _startTime = value.ToString(); } }
+
+        [IgnoreDataMember]
+        [XmlIgnore]
+        public TimeSpan Duration { get { return TimeSpan.Parse(_duration); } set { _duration = value.ToString(); } }
+    }
